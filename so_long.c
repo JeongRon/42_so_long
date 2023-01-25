@@ -6,54 +6,38 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 18:04:02 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/25 21:43:43 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/01/26 04:23:55 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_ber(char *s)
+int	error_msg(char *s)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	if (i >= 5)
-	{
-		if (s[i - 1] == 'r' && s[i - 2] == 'e'
-			&& s[i - 3] == 'b' && s[i - 4] == '.')
-			return (1);
-	}
+	write(1, s, ft_strlen(s));
+	write(1, "\n", 1);
 	return (0);
-}
-
-char	*read_map(int fd)
-{
-	t_check_map	tmp;
-	char		*buff;
-
-	tmp.collect_cnt = 0;
-	tmp.exit_cnt = 0;
-	tmp.position_cnt = 0;
-	tmp.line_cnt = 0;
-	// buff = get_next_line(fd, tmp);
-	return (buff);
 }
 
 int	main(int ac, char **av)
 {
-	int		fd;
-	char	*map;
+	int			fd;
+	char		*map;
+	t_check_map	map_info;
 
-	if (ac != 2)
-		return (error_ac_msg());
-	if (check_ber(av[1]) == 0)
-		return (error_ber_msg());
+	if (check_ac_av(ac, av[1]) == 0)
+		return (0);
+	initialize_map_info(&map_info);
+
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		return (error_fd_msg());
-	map = read_map(fd);
-
+		return (error_msg("file open Error"));
+	map = read_map(fd, &map_info);
+	if (!map)
+		return (0);
+	if (check_map_cnt(&map_info) == 0 || check_map_wall(map, map_info, 0) == 0
+		|| check_map_dfs(map, &map_info) == 0)
+		return (0);
+	free(map);
 	return (0);
 }
