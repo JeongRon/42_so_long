@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/01/25 19:45:53 by jeongrol          #+#    #+#              #
+#    Updated: 2023/01/25 19:47:46 by jeongrol         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = so_long
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -28,5 +40,8 @@ $(NAME):
 
 %.o : %.c
 	$(CC) $(CFLAGS) -Imlx -c $< -o$@
+
+dd:
+	$(RM) $(RMFLAGS) $(NAME)
 
 .PHONY: clean fclean re bonus all
