@@ -6,22 +6,19 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 04:07:44 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/26 04:12:44 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:01:09 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	check_line(char *line, int line_len, t_check_map *info)
+static int	check_line(char *line, int line_len, t_check_map *info, int i)
 {
-	int	i;
-
 	if (info->col == 0)
 		info->col = line_len;
 	else
 		if (info->col != line_len)
 			return (error_msg("rectangle Error"));
-	i = -1;
 	while (++i < line_len)
 	{
 		if (line[i] == '0' || line[i] == '1')
@@ -29,7 +26,10 @@ static int	check_line(char *line, int line_len, t_check_map *info)
 		else if (line[i] == 'C')
 			info->c++;
 		else if (line[i] == 'E')
+		{
 			info->e++;
+			info->e_index = ((info->row - 1) * line_len) + i;
+		}
 		else if (line[i] == 'P')
 		{
 			info->p++;
@@ -70,7 +70,7 @@ char	*read_map(int fd, t_check_map *info)
 			break ;
 		line_len = so_long_strlen(line);
 		info->row++;
-		if (check_line(line, line_len, info) == 1)
+		if (check_line(line, line_len, info, -1) == 1)
 			map_buff = ft_strjoin(map_buff, line, line_len);
 		else
 		{

@@ -42,10 +42,8 @@
         - int	check_map_wall(char *map, t_check_map info, int index)
         - int	check_map_dfs(char *map, t_check_map *info)
     
-    4. **so_long 맵 띄우기 단계**
-        - (예정)    
-    5. **so_long key event 처리 단계**
-        - (예정)
+    4. **so_long 맵 띄우기 + key event 처리단계**
+        - (진행중)    
 
 ### so_long_ready.c (준비단계)
 - int	check_ac_av(int ac, char *av)

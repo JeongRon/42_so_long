@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 04:01:20 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/26 04:08:13 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:57:19 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ void	initialize_map_info(t_check_map *info)
 	info->col = 0;
 	info->row = 0;
 	info->p_index = 0;
+	info->e_index = 0;
 	info->dfs_count = 0;
+	info->map_count = 0;
 }

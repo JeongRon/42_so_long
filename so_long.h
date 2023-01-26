@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:55:46 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/26 04:18:28 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:57:29 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,33 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <string.h>
-# include "mlx/mlx.h"
+# include "./mlx/mlx.h"
 
+# define X_EVENT_KEY_PRESS		2
+# define X_EVENT_KEY_RELEASE	3
+# define X_EVENT_KEY_EXIT		17
+# define KEY_ESC	53
+# define KEY_W		13
+# define KEY_A		0
+# define KEY_S		1
+# define KEY_D		2
 
 # define BUFFER_SIZE 42
 
 typedef struct s_check_map
 {
+	void	*mlx;
+	void	*win;
+	char	*line;
 	int		c;
 	int		e;
 	int		p;
 	int		col;
 	int		row;
 	int		p_index;
+	int		e_index;
 	int		dfs_count;
+	int		map_count;
 }	t_check_map;
 
 int		error_msg(char *s);
