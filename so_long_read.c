@@ -5,20 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 04:07:44 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/26 17:01:09 by jeongrol         ###   ########.fr       */
+/*   Created: 2023/01/26 04:01:20 by jeongrol          #+#    #+#             */
+/*   Updated: 2023/02/16 04:16:41 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	check_line(char *line, int line_len, t_check_map *info, int i)
+static int	check_col_cnt(t_check_map *info, int line_len)
 {
 	if (info->col == 0)
 		info->col = line_len;
-	else
-		if (info->col != line_len)
-			return (error_msg("rectangle Error"));
+	if (info->col != line_len)
+		return (0);
+	return (1);
+}
+
+static int	check_line(char *line, int line_len, t_check_map *info, int i)
+{
+	if (check_col_cnt(info, line_len) == 0)
+		return (0);
 	while (++i < line_len)
 	{
 		if (line[i] == '0' || line[i] == '1')
@@ -36,7 +42,7 @@ static int	check_line(char *line, int line_len, t_check_map *info, int i)
 			info->p_index = ((info->row - 1) * line_len) + i;
 		}
 		else
-			return (error_msg("wrong character Error"));
+			return (0);
 	}
 	return (1);
 }
@@ -53,6 +59,13 @@ static int	so_long_strlen(char *s)
 		i++;
 	}
 	return (i);
+}
+
+char	*free_and_null(char *s)
+{
+	free(s);
+	s = NULL;
+	return (s);
 }
 
 char	*read_map(int fd, t_check_map *info)
@@ -78,6 +91,7 @@ char	*read_map(int fd, t_check_map *info)
 			map_buff = NULL;
 			break ;
 		}
+		free_and_null(line);
 	}
 	free(line);
 	return (map_buff);

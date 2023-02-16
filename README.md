@@ -65,3 +65,5 @@
     - 지도가 '1' 벽으로 둘러싸여 있는지 확인 하는 함수
 - int	check_map_dfs(char *map, t_check_map *info)
     - ['P' 출발 -> 'C' 모든 수집품  -> 'E' 출구] 과정이 이루어질 수 있는지 확인하는 함수
+
+### so_long_screen.c / so_long_event.c (mlx 단계)

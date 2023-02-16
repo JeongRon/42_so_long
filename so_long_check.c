@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 04:13:25 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/26 04:31:36 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/02/16 04:42:31 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,11 @@
 int	check_map_cnt(t_check_map *info)
 {
 	if (info->c == 0)
-		return (error_msg("collect Error"));
+		return (error_msg("You must contain at least 1 Collectible"));
 	else if (info->e != 1)
-	{
-		printf("exit : %d\n", info->e);
-		return (error_msg("exit Error"));
-	}
+		return (error_msg("You must contain 1 Exit"));
 	else if (info->p != 1)
-		return (error_msg("start position Error"));
+		return (error_msg("You must contain 1 Starting Position"));
 	return (1);
 }
 
@@ -40,13 +37,13 @@ int	check_map_wall(char *map, t_check_map info, int index)
 			if (i == 1 || i == info.row)
 			{
 				if (map[index] != '1')
-					return (error_msg("wall Error"));
+					return (error_msg("map must be surrounded by walls"));
 			}
 			else
 			{
 				if (j == 1 || j == info.col)
 					if (map[index] != '1')
-						return (error_msg("wall Error"));
+						return (error_msg("map must be surrounded by walls"));
 			}
 			index++;
 		}
@@ -54,7 +51,7 @@ int	check_map_wall(char *map, t_check_map info, int index)
 	return (1);
 }
 
-static int	dfs_direction(int d, t_check_map *info)
+static int	check_dfs_segfault(int d, t_check_map *info)
 {
 	int	end_index;
 	int	start_index;
@@ -66,7 +63,7 @@ static int	dfs_direction(int d, t_check_map *info)
 	return (0);
 }
 
-static void	dfs_run(char *dfs_map, t_check_map *info, int index)
+static void	check_dfs_run(char *dfs_map, t_check_map *info, int index)
 {
 	int	up;
 	int	down;
@@ -77,20 +74,17 @@ static void	dfs_run(char *dfs_map, t_check_map *info, int index)
 	down = index + info->col;
 	left = index - 1;
 	right = index + 1;
-
 	if (dfs_map[index] == 'C' || dfs_map[index] == 'E')
 		info->dfs_count++;
 	dfs_map[index] = '1';
-	if (dfs_map[index] == 'E')
-		return ;
-	if (dfs_direction(up, info) && dfs_map[up] != '1')
-		dfs_run(dfs_map, info, up);
-	if (dfs_direction(down, info) && dfs_map[down] != '1')
-		dfs_run(dfs_map, info, down);
-	if (dfs_direction(left, info) && dfs_map[left] != '1')
-		dfs_run(dfs_map, info, left);
-	if (dfs_direction(right, info) && dfs_map[right] != '1')
-		dfs_run(dfs_map, info, right);
+	if (check_dfs_segfault(up, info) && dfs_map[up] != '1')
+		check_dfs_run(dfs_map, info, up);
+	if (check_dfs_segfault(down, info) && dfs_map[down] != '1')
+		check_dfs_run(dfs_map, info, down);
+	if (check_dfs_segfault(left, info) && dfs_map[left] != '1')
+		check_dfs_run(dfs_map, info, left);
+	if (check_dfs_segfault(right, info) && dfs_map[right] != '1')
+		check_dfs_run(dfs_map, info, right);
 }
 
 int	check_map_dfs(char *map, t_check_map *info)
@@ -98,9 +92,14 @@ int	check_map_dfs(char *map, t_check_map *info)
 	char	*dfs_map;
 
 	dfs_map = ft_strdup(map);
-	dfs_run(dfs_map, info, info->p_index);
+	if (!dfs_map)
+	{
+		free(dfs_map);
+		return (error_msg("Memory allocation failure(dfs_map)"));
+	}
+	check_dfs_run(dfs_map, info, info->p_index);
 	free(dfs_map);
 	if (info->dfs_count != info->c + info->e)
-		return (error_msg("invalid path map Error"));
+		return (error_msg("Invalid path map"));
 	return (1);
 }

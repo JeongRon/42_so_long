@@ -6,19 +6,18 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:55:46 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/26 16:57:29 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/02/16 03:40:02 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdlib.h>
 # include <string.h>
-# include "./mlx/mlx.h"
+# include "mlx/mlx.h"
 
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_RELEASE	3
@@ -53,6 +52,7 @@ int		check_ac_av(int ac, char *av);
 void	initialize_map_info(t_check_map *info);
 
 char	*read_map(int fd, t_check_map *info);
+
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *src);
 void	free_all(char *a, char *b);
@@ -63,5 +63,13 @@ char	*ft_strjoin(char *join_buff, char *tmp, int tmp_len);
 int		check_map_cnt(t_check_map *info);
 int		check_map_wall(char *map, t_check_map info, int index);
 int		check_map_dfs(char *map, t_check_map *info);
+
+void	run_mlx(t_check_map *map);
+int		show_map(t_check_map *map, int x, int y, int index);
+void	categorize_case(t_check_map *map, int x, int y, int index);
+void	put_img(t_check_map *map, int y, int x, char *file);
+
+int		key_press(int keycode, t_check_map *map);
+int		exit_map(t_check_map *map);
 
 #endif

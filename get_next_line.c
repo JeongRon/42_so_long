@@ -6,12 +6,11 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 22:30:23 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/01/26 00:27:48 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/02/16 03:38:58 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 static int	check_buff(char *buff)
 {
@@ -121,7 +120,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			line_len;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0)
 		return (NULL);
 	if (cache)
 	{
