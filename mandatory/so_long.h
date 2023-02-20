@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:55:46 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/02/16 03:40:02 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/02/20 18:51:14 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-# include "mlx/mlx.h"
+# include "../mlx/mlx.h"
 
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_RELEASE	3
