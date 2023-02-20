@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 04:01:20 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/02/16 04:16:41 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:29:32 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	so_long_strlen(char *s)
 	return (i);
 }
 
-char	*free_and_null(char *s)
+static char	*free_and_null(char *s)
 {
 	free(s);
 	s = NULL;

@@ -6,7 +6,7 @@
 /*   By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 04:13:25 by jeongrol          #+#    #+#             */
-/*   Updated: 2023/02/16 04:42:31 by jeongrol         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:39:00 by jeongrol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,20 @@ static void	check_dfs_run(char *dfs_map, t_check_map *info, int index)
 	right = index + 1;
 	if (dfs_map[index] == 'C' || dfs_map[index] == 'E')
 		info->dfs_count++;
-	dfs_map[index] = '1';
-	if (check_dfs_segfault(up, info) && dfs_map[up] != '1')
-		check_dfs_run(dfs_map, info, up);
-	if (check_dfs_segfault(down, info) && dfs_map[down] != '1')
-		check_dfs_run(dfs_map, info, down);
-	if (check_dfs_segfault(left, info) && dfs_map[left] != '1')
-		check_dfs_run(dfs_map, info, left);
-	if (check_dfs_segfault(right, info) && dfs_map[right] != '1')
-		check_dfs_run(dfs_map, info, right);
+	if (dfs_map[index] != 'E')
+	{
+		dfs_map[index] = '1';
+		if (check_dfs_segfault(up, info) && dfs_map[up] != '1')
+			check_dfs_run(dfs_map, info, up);
+		if (check_dfs_segfault(down, info) && dfs_map[down] != '1')
+			check_dfs_run(dfs_map, info, down);
+		if (check_dfs_segfault(left, info) && dfs_map[left] != '1')
+			check_dfs_run(dfs_map, info, left);
+		if (check_dfs_segfault(right, info) && dfs_map[right] != '1')
+			check_dfs_run(dfs_map, info, right);
+	}
+	else
+		dfs_map[index] = '1';
 }
 
 int	check_map_dfs(char *map, t_check_map *info)
@@ -100,6 +105,6 @@ int	check_map_dfs(char *map, t_check_map *info)
 	check_dfs_run(dfs_map, info, info->p_index);
 	free(dfs_map);
 	if (info->dfs_count != info->c + info->e)
-		return (error_msg("Invalid path map"));
+		return (error_msg("Invalid path map (DFS)"));
 	return (1);
 }

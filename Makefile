@@ -1,41 +1,55 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jeongrol <jeongrol@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/02/20 18:06:59 by jeongrol          #+#    #+#              #
+#    Updated: 2023/02/20 18:12:50 by jeongrol         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = so_long
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = ft_isalnum.c ft_isdigit.c ft_memmove.c ft_strlcat.c ft_strncmp.c ft_tolower.c ft_atoi.c ft_isalpha.c ft_isprint.c ft_memset.c ft_strlcpy.c ft_strnstr.c ft_toupper.c ft_bzero.c ft_isascii.c ft_memcpy.c ft_strchr.c ft_strlen.c ft_strrchr.c ft_memchr.c ft_memcmp.c ft_strdup.c ft_calloc.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
-SRCS_B = 
-OBJS = $(SRCS:.c=.o)
-OBJS_B = $(SRCS_B:.c=.o)
 
-AR = ar
-ARFLAGS = -rcs
-RM = rm
-RMFLAGS = -f
+RM = rm -f
 
-ifdef BONUS
-	OBJS_M = $(OBJS_B)
-else
-	OBJS_M = $(OBJS)
-endif
+HEADER = so_long.h
 
-all: $(NAME)
+MLX_LINK = -Lmlx -lmlx -framework OpenGL -framework Appkit
+
+SRCS	=	so_long.c \
+			so_long_ready.c \
+			so_long_read.c \
+			so_long_check.c \
+			so_long_screen.c \
+			so_long_event.c \
+			get_next_line.c \
+			get_next_line_utils.c \
+
+OBJS	= $(SRCS:%.c=%.o)
+
+all:	$(NAME)
 
 clean:
-	$(RM) $(RMFLAGS) $(OBJS) $(OBJS_B)
+	$(RM) $(OBJS)
+	make clean -C mlx
+	
+fclean:	clean
+	$(RM) $(NAME)
 
-fclean: clean
-	$(RM) $(RMFLAGS) $(NAME)
-
-re: 
+re:
 	make fclean
 	make all
 
-bonus : $(OBJS_B)
-	make BONUS=1
+$(NAME):	$(OBJS)  $(HEADER)
+	@make -C mlx
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I. $(MLX_LINK)
 
-$(NAME): $(OBJS_M)
-	$(AR) $(ARFLAGS) $@ $^
+%.o : %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c $<
-
-.PHONY: clean fclean re bonus all
+.PHONY:	all clean fclean re
