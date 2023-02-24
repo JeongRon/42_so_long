@@ -1,7 +1,31 @@
-# 42_so_long
+# 42_so_long / 2D Game 프로그램 만들기 🎈
+
+<br>
+
+## 0. Introduction
+- This project is a very small 2D game.
+- The player’s goal is to collect every collectible present on the map, then escape
+- **Library** : MiniLibX (school graphical library)
+    - This library was developed internally and includes basic necessary tools to open a window, create images and deal with keyboard and mouse events.
+
+- **Skills** : window management, event handling, colors, textures, and so forth.
+
+<br>
+
+<h4>(ScreenShot)</h4>
+
+![map](./images/screenshot1.png)
+
+HOW TO USE ?
+1. git clone repository
+2. type this command in terminal : ```make```
+3. execute so_long file in terminal : ```./so_long maps/valid_42.ber ```
+
+<br>
+<br>
 
 ## 1. so_long 구상
-1. main함수 실행 시, argc argv를 통해 map 파일의 경로 정보 주기
+1. main함수 실행 시, argc argv를 통해 map 파일경로 정보 주기
     ```c
         ./so_long maps/big_map.ber
     ```
@@ -25,39 +49,35 @@
 3. 만든 1차원 배열을 mlx해서 map 만들기
 4. key 누를 때 마다 받고 -> 변경 -> 다시 그리기
 
+<br>
+
 ## 2. so_long 구현
 
 ### so_long.c
-- int	error_msg(char *s)
-    - 에러 메시지 출력하는 함수
 
 - **int	main(int ac, char \*\*av)**
-    1. **so_long 준비 단계**
+    1. **so_long 준비단계**
         - int	check_ac_av(int ac, char *av)
         - void	initialize_map_info(t_check_map *info)
-    2. **so_long 맵 읽기 단계**
+    2. **so_long 맵 읽기단계**
         - char	*read_map(int fd, t_check_map *info)
-    3. **so_long 맵 체크 단계**
+    3. **so_long 맵 체크단계**
         - int	check_map_cnt(t_check_map *info)
         - int	check_map_wall(char *map, t_check_map info, int index)
         - int	check_map_dfs(char *map, t_check_map *info)
-    4. **so_long [map + key event]단계**
-        - (진행 중)    
+    4. **so_long mlx 단계**
+        - void	run_mlx(t_check_map *map)   
 
-### so_long_ready.c (준비단계)
+### (1) so_long_ready.c (준비단계)
 - int	check_ac_av(int ac, char *av)
     - ac, av 알맞게 왔는지 체크하는 함수
 - void	initialize_map_info(t_check_map *info)
     - map_info 구조체 초기화하는 함수
-### so_long_read.c (맵 읽기단계)
+### (2) so_long_read.c (지도 읽기단계)
 - char	*read_map(int fd, t_check_map *info)
     - map을 read해서 1차원 배열로 리턴하는 함수로 저번 과제에서 만든 GNL을 활용
         - get_next_line.c / get_next_line_utils.c (GNL 코드)
-    - static int	so_long_strlen(char *s)
-        - GNL에서 나온 \n 포함 한줄의 문자열에서 \n을 뺀 길이 반환하는 함수
-    - static int	check_line(char *line, int line_len, t_check_map *info)
-        - GNL에서 나온 문자열에서 세로 길이가 같은지, 허용되지 않은 문자가 왔는지 체크하는 함수 
-### so_long_check.c (맵 체크단계)
+### (3) so_long_check.c (지도 체크단계)
 - int	check_map_cnt(t_check_map *info)
     - 'C' 수집품이 1개 이상인지, 'E' 출구가 1개인지, 'P' 출발점이 1개인지 확인하는 함수
 - int	check_map_wall(char *map, t_check_map info, int index)
@@ -65,4 +85,8 @@
 - int	check_map_dfs(char *map, t_check_map *info)
     - ['P' 출발 -> 'C' 모든 수집품  -> 'E' 출구] 과정이 이루어질 수 있는지 확인하는 함수
 
-### so_long_screen.c / so_long_event.c (mlx 단계)
+### (4) so_long_screen.c / so_long_event.c (mlx 단계)
+- void	run_mlx(t_check_map *map)
+    - mlx를 실행 및 유지 시키는 함수
+- 게임 시작 및 화면 띄우는 코드 : so_long_screen.c 파일에 분류
+- 게임 실행 중, 이벤트 발생 시 처리해야 할 코드 : so_long_event.c 파일에 분류
