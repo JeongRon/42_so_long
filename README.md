@@ -10,13 +10,12 @@
 
 - **Skills** : window management, event handling, colors, textures, and so forth.
 
-<br>
 
-<h4>(ScreenShot)</h4>
+<h5>ScreenShot</h5>
 
 ![map](./images/screenshot1.png)
 
-HOW TO USE ?
+**HOW TO USE ?**
 1. git clone repository
 2. type this command in terminal : ```make```
 3. execute so_long file in terminal : ```./so_long maps/valid_42.ber ```
